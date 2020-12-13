@@ -26,9 +26,19 @@ The rest was automatic. I just generated a smaller path with the same form, and 
 
 ![Arcs Of Verona (Phase 2)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase02.png)
 
+To reverse-engineer floor pattern, I rotated it in my mind like I'm watching it from the ceiling. And it appeared to be consist of perfect square tiles with the following pattern. There are 4x4 tiles with the margin 1/3 of the tile. Then, the row with 6 tiles instead of 4, and the pattern continues. 2x2 tiles in the center of 4x4 are combined in a single square, with a smaller square hole carved. And that's it:
+
+![Arcs Of Verona (Floor Pattern)](/studies/making_of/arcs_of_verona/img/floor_pattern.png)
+
+For the perspective, I wrote a helper function that transforms coordinates using focal length of the camera and the angle by which the plane is rotated. I also defined focal length and angle as constants and re-used them for every coordinate that needs a projection to create a solid perspective for the scene.
+
+So, for the floor, I just transformed all coordinates of the generated pattern, and picked up projection constants to make it look like at the original image. Then, I calculated arcs' positions and widths using the same perspective. Each arc also has a different color from 5 base colors palette. I used only those colors to derive every other shade next.
+
 ### Phase 3: Reflections / Far Wall
 
 ![Arcs Of Verona (Phase 3)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase03.png)
+
+
 
 ### Phase 4: Bricks' Depth / Corrected Reflections
 
