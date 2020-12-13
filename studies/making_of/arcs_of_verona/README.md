@@ -56,6 +56,12 @@ At that moment, reflections were buggy, but I was OK with that. Let fix it at th
 
 ![Arcs Of Verona (Phase 4)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase04.png)
 
+Arcs' bricks are not flat, so at the next step I added some depth to them. For it, I generated third path per each arc (outer, inner + depth). The coordinates for the depth path are calculated from the inner path, using common perspective of the scene. Then, I rewrote arcs' bricks drawing to make a shading effect for the bricks. Outer-inner polygon is filled with the main color (+random tweaks), and inner-depth polygon is a darken version of the same random main color.
+
+After upper arcs were looking good, I corrected the lower ones (reflections). Notice, they are not a flipped version of the upper ones, but rather built keeping the perspective. Like they are just a continuation of the columns viewed from the same point. I also raised the point of view somewhere to the center of the arc, that put the scene closer to the original observer look.
+
+And the last at this phase, I added a non-transparent 'street' plane to the floor (the very bottom of the image).
+
 ### Phase 5: Basic Lighting
 
 ![Arcs Of Verona (Phase 5)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase05.png)
