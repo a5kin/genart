@@ -1,46 +1,93 @@
 ## Generative Study: Arcs Of Verona
 
-For several years I was watching my wife drawing sketches and studies to grow as an artist.
-Then suddenly I had the idea to try the same by myself. But using the power of pure code instead of brushes and pencils.
+For several years I was watching my wife drawing sketches and studies
+to grow as an artist.  Then suddenly I had the idea to try the same by
+myself. But using the power of pure code instead of brushes and
+pencils.
 
-So, I called this format "Generative Studies", wrote a brief Concept for myself, and started with my first study.
+So, I called this format "Generative Studies", wrote a brief Concept
+for myself, and started with my first study.
 
-The original photo I tried to reproduce was an arcade somewhere in the city of Verona.
-Its beautiful colors and magnificent architecture was an inspiration for me during the whole process.
+The original photo I tried to reproduce was an arcade somewhere in the
+city of Verona.  Its beautiful colors and magnificent architecture was
+an inspiration for me during the whole process.
 
 ### Phase 1: Main Wall / Arc Form
 
 ![Arcs Of Verona (Phase 1)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase01.png)
 
-I started with the things in the foreground. The main wall and the first arc of the same color.
+I started with the things in the foreground. The main wall and the
+first arc of the same color.
 
-The wall consists of bricks, but they are not identical. They differs in color and a brick's width also differs from column to column. So, I generated a perfect grid for future bricks, then randomly shifted each vertical line a bit. To achieve more natural-looking result, I used Gauss distribution through the whole study. For bricks' colors, I picked up two base values (lightest and darkest shades), then blended each brick's color between them using the same Gauss distribution.
+The wall consists of bricks, but they are not identical. They differs
+in color and a brick's width also differs from column to column. So, I
+generated a perfect grid for future bricks, then randomly shifted each
+vertical line a bit. To achieve more natural-looking result, I used
+Gauss distribution through the whole study. For bricks' colors, I
+picked up two base values (lightest and darkest shades), then blended
+each brick's color between them using the same Gauss distribution.
 
-The arc form was the trickest part in the study. I meditated on the original photo for amount of time just to end up with the fact I have no idea how to reproduce it. So, I opened a photo in my favorite editor, and draw several lines through the gaps between the bricks, just out of interest. The result astonished me immediately. Lines for the first quater are all intersecting at the same point, right in the "center" of the arc. For the second quarter, lines are intersecting at the other point... roughly twice as large as the first lines.
+The arc form was the trickest part in the study. I meditated on the
+original photo for amount of time just to end up with the fact I have
+no idea how to reproduce it. So, I opened a photo in my favorite
+editor, and draw several lines through the gaps between the bricks,
+just out of interest. The result astonished me immediately. Lines for
+the first quater are all intersecting at the same point, right in the
+"center" of the arc. For the second quarter, lines are intersecting at
+the other point... roughly twice as large as the first lines.
 
-With that two facts, it became pretty clear for me how to reproduce the arc's contour. Let simulate it with two circular paths, first with the radius R (half arc's width), second with the radius 2R (arc's width). Herewith, last point of the first path, and the first point of the second path should be the same.
+With that two facts, it became pretty clear for me how to reproduce
+the arc's contour. Let simulate it with two circular paths, first with
+the radius R (half arc's width), second with the radius 2R (arc's
+width). Herewith, last point of the first path, and the first point of
+the second path should be the same.
 
-The rest was automatic. I just generated a smaller path with the same form, and drew bricks between this two using the same random width/color approach as for the main wall.
+The rest was automatic. I just generated a smaller path with the same
+form, and drew bricks between this two using the same random
+width/color approach as for the main wall.
 
 ### Phase 2: Perspective / Floor Pattern
 
 ![Arcs Of Verona (Phase 2)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase02.png)
 
-To reverse-engineer floor pattern, I rotated it in my mind like I'm watching it from the ceiling. And it turned out that it consists of perfect square tiles with the following pattern. There are 4x4 tiles with the margin 1/3 of the tile. Then, the row with 6 tiles instead of 4, and the pattern continues. 2x2 tiles in the center of 4x4 are combined in a single square, with a smaller square hole carved. And that's it:
+To reverse-engineer floor pattern, I rotated it in my mind like I'm
+watching it from the ceiling. And it turned out that it consists of
+perfect square tiles with the following pattern. There are 4x4 tiles
+with the margin 1/3 of the tile. Then, the row with 6 tiles instead of
+4, and the pattern continues. 2x2 tiles in the center of 4x4 are
+combined in a single square, with a smaller square hole carved. And
+that's it:
 
 ![Arcs Of Verona (Floor Pattern)](/studies/making_of/arcs_of_verona/img/floor_pattern.png)
 
-For the perspective, I wrote a helper function that transforms coordinates using focal length of the camera and the angle by which the plane is rotated. I also defined focal length and angle as constants and re-used them for every coordinate that needs a projection to create a solid perspective for the scene.
+For the perspective, I wrote a helper function that transforms
+coordinates using focal length of the camera and the angle by which
+the plane is rotated. I also defined focal length and angle as
+constants and re-used them for every coordinate that needs a
+projection to create a solid perspective for the scene.
 
-So, for the floor, I just transformed all coordinates of the generated pattern, and picked up projection constants to make it look like at the original image. Then, I calculated arcs' positions and widths using the same perspective. Each arc also has a different color from 5 base colors palette. I used only those colors to derive every other shade next.
+So, for the floor, I just transformed all coordinates of the generated
+pattern, and picked up projection constants to make it look like at
+the original image. Then, I calculated arcs' positions and widths
+using the same perspective. Each arc also has a different color from 5
+base colors palette. I used only those colors to derive every other
+shade next.
 
 ### Phase 3: Reflections / Far Wall
 
 ![Arcs Of Verona (Phase 3)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase03.png)
 
-To make the scene more complete, I added a far wall generated by the same algorithm as the main wall, but with different colors and proportions calculated by the common perspective. Didn't mention it, but at the previous phase I also added a black area in the center of the main wall. It's here just for the debug purposes, until the scene is complete.
+To make the scene more complete, I added a far wall generated by the
+same algorithm as the main wall, but with different colors and
+proportions calculated by the common perspective. Didn't mention it,
+but at the previous phase I also added a black area in the center of
+the main wall. It's here just for the debug purposes, until the scene
+is complete.
 
-Then, I added a basic idea of the reflections. For that, I drew the whole arcade 'upside down' along with the far wall, using perspective with the negative height. Then, applied semi-transparent floor over it, and finally drew usual arcade.
+Then, I added a basic idea of the reflections. For that, I drew the
+whole arcade 'upside down' along with the far wall, using perspective
+with the negative height. Then, applied semi-transparent floor over
+it, and finally drew usual arcade.
 
 So, the order of drawing was following.
 
@@ -50,25 +97,65 @@ So, the order of drawing was following.
 4. Semi-transparent floor.
 5. Arcade with the far wall.
 
-At that moment, reflections were buggy, but I was OK with that. Let fix it at the next phase. Right now, the generated image is more close to the original, and that's the main goal of the iterative study process. 
+At that moment, reflections were buggy, but I was OK with that. Let
+fix it at the next phase. Right now, the generated image is more close
+to the original, and that's the main goal of the iterative study
+process.
 
 ### Phase 4: Bricks' Depth / Corrected Reflections
 
 ![Arcs Of Verona (Phase 4)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase04.png)
 
-Arcs' bricks are not flat, so at the next step I added some depth to them. For it, I generated third path per each arc (outer, inner + depth). The coordinates for the depth path are calculated from the inner path, using common perspective of the scene. Then, I rewrote arcs' bricks drawing to make a shading effect for the bricks. Outer-inner polygon is filled with the main color (+random tweaks), and inner-depth polygon is a darken version of the same random main color.
+Arcs' bricks are not flat, so at the next step I added some depth to
+them. For it, I generated third path per each arc (outer, inner +
+depth). The coordinates for the depth path are calculated from the
+inner path, using common perspective of the scene. Then, I rewrote
+arcs' bricks drawing to make a shading effect for the
+bricks. Outer-inner polygon is filled with the main color (+random
+tweaks), and inner-depth polygon is a darken version of the same
+random main color.
 
-After upper arcs were looking good, I corrected the lower ones (reflections). Notice, they are not a flipped version of the upper ones, but rather built keeping the perspective. Like they are just a continuation of the columns viewed from the same point. I also raised the point of view somewhere to the center of the arc, that put the scene closer to the original observer look.
+After upper arcs were looking good, I corrected the lower ones
+(reflections). Notice, they are not a flipped version of the upper
+ones, but rather built keeping the perspective. Like they are just a
+continuation of the columns viewed from the same point. I also raised
+the point of view somewhere to the center of the arc, that put the
+scene closer to the original observer look.
 
-And the last at this phase, I added a non-transparent 'street' plane to the floor (the very bottom of the image).
+And the last at this phase, I added a non-transparent 'street' plane
+to the floor (the very bottom of the image).
 
 ### Phase 5: Basic Lighting
 
 ![Arcs Of Verona (Phase 5)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase05.png)
 
+To cast more natural light to the scene, I improved the coloring for
+the arcs by adding few extra parameters to the arc's drawing
+function.
+
+First, are two ratios by which lower and upper bricks are lighter/darker
+than a base arc color. I noticed that arcs are lighter at the bottom
+and darker at the top. So, I picked up those two params giving arcs
+that 'gradient' feeling. Note, that each brick is still filled with a
+solid color. And that color still determined by a random Gauss component.
+
 ### Phase 6: Advanced Lighting
 
 ![Arcs Of Verona (Phase 6)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase06.png)
+
+Second, are two ratios for inner-depth bricks coloring. I noticed,
+they are darker at the bottom and lighter at the top. So, those
+parameters are determining how much lightness/darkness should be
+applied to the main brick's color, in order to produce 3D effect for
+the inner side. No random component applied to the color at this
+phase, so two sides of each brick has the same 'shade' feeling.
+
+I also experimented with the function that makes a color
+lighter. Previously, it simply multiplyed RGB components by the same
+ratio. This corrupted the hue and looked not so natural on higher
+values. So, I switched to HLS scheme and played again with each of the
+4 ratios, until the resulting picture looked as much closer to the
+original as possible.
 
 ### Phase 7: Ceiling
 
