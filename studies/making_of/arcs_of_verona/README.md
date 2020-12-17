@@ -27,7 +27,7 @@ Gauss distribution through the whole study. For bricks' colors, I
 picked up two base values (lightest and darkest shades), then blended
 each brick's color between them using the same Gauss distribution.
 
-The arc form was the trickest part in the study. I meditated on the
+The arc form was the trickiest part in the study. I meditated on the
 original photo for amount of time just to end up with the fact I have
 no idea how to reproduce it. So, I opened a photo in my favorite
 editor, and draw several lines through the gaps between the bricks,
@@ -151,15 +151,38 @@ the inner side. No random component applied to the color at this
 phase, so two sides of each brick has the same 'shade' feeling.
 
 I also experimented with the function that makes a color
-lighter. Previously, it simply multiplyed RGB components by the same
-ratio. This corrupted the hue and looked not so natural on higher
-values. So, I switched to HLS scheme and played again with each of the
-4 ratios, until the resulting picture looked as much closer to the
-original as possible.
+lighter. Previously, it was simply multipluing RGB components by the
+same ratio. This was corrupting the hue and looking not so natural on
+higher values. So, I switched to HLS scheme and played again with each
+of the 4 ratios, until the resulting picture looked as much closer to
+the original as possible.
 
 ### Phase 7: Ceiling
 
 ![Arcs Of Verona (Phase 7)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase07.png)
+
+With switching to HLS, colors became softer than at the original
+image, so I implemented a blend between RGB and HLS lighting. This
+gave more 'succulence' to the lighter shades. Colors were still quite
+different from the original, but I was OK with that. An image alone
+was giving me the similar lighting feeling as at the photo.
+
+Next, was a ceiling, another tricky part I almost broke my head
+over. After several unsuccessful attempts to reproduce it, I finally
+decided to keep it simple and just give the common feeling of
+ceiling's colors. Anyway, it plays the secondary role in the scene,
+and takes only a little part of the whole image.
+
+So, to simulate ceiling's lighting, I used two radial
+gradients. First, from from the darker to the lighter version of
+previous arc's base color. Second, smaller, from semi-black to fully
+transparent to create a 'shadow'.
+
+I also tried to connect each pair of bricks for the two consequent
+arcs with lines, in attempt to image 'bricks', ceiling is made of. But
+they all was looking too ugly and breaking my 3D feeling of the
+scene. So, I kept it, just made them very subtle in color, almost
+indistinguishable from the ceiling's gradients.
 
 ### Phase 8: Altar / Far Arc
 
