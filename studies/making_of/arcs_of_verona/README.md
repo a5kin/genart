@@ -174,12 +174,12 @@ ceiling's colors. Anyway, it plays the secondary role in the scene,
 and takes only a little part of the whole image.
 
 So, to simulate ceiling's lighting, I used two radial
-gradients. First, from from the darker to the lighter version of
-previous arc's base color. Second, smaller, from semi-black to fully
+gradients. First, from the darker to the lighter version of previous
+arc's base color. Second, smaller, from semi-black to fully
 transparent to create a 'shadow'.
 
 I also tried to connect each pair of bricks for the two consequent
-arcs with lines, in attempt to image 'bricks', ceiling is made of. But
+arcs with lines, in attempt to image 'bricks' ceiling is made of. But
 they all was looking too ugly and breaking my 3D feeling of the
 scene. So, I kept it, just made them very subtle in color, almost
 indistinguishable from the ceiling's gradients.
@@ -187,6 +187,19 @@ indistinguishable from the ceiling's gradients.
 ### Phase 8: Altar / Far Arc
 
 ![Arcs Of Verona (Phase 8)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase08.png)
+
+At this moment, primitives were covering the whole image, so I removed black area in the center. Remember, it was added before at the Phase 3 for the debugging purposes.
+
+Now for the 'altar' at the far wall. It has a complex structure, and that's how I chose to reproduce it.
+
+1. Draw a rectangle, filled with the base brown color (for the altar's top).
+2. Draw a shadow (radial gradient) for the altar's top.
+3. Draw an arc with longer bricks of base red color.
+4. Draw a lower half of the far wall made of bricks, as previously.
+5. Draw a bottom brick, as a rectangle with the base brown color.
+6. Draw shadows (linear gradient) for the altar left/right sides.
+
+Looks pretty close, yet schematic, so let move on.
 
 ### Phase 9: Lamps
 
