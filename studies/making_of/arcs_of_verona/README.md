@@ -188,9 +188,12 @@ indistinguishable from the ceiling's gradients.
 
 ![Arcs Of Verona (Phase 8)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase08.png)
 
-At this moment, primitives were covering the whole image, so I removed black area in the center. Remember, it was added before at the Phase 3 for the debugging purposes.
+At this moment, primitives were covering the whole image, so I removed
+black area in the center. Remember, it was added before at the Phase 3
+for the debugging purposes.
 
-Now for the 'altar' at the far wall. It has a complex structure, and that's how I chose to reproduce it.
+Now for the 'altar' at the far wall. It has a complex structure, and
+that's how I chose to reproduce it.
 
 1. Draw a rectangle, filled with the base brown color (for the altar's top).
 2. Draw a shadow (radial gradient) for the altar's top.
@@ -204,6 +207,35 @@ Looks pretty close, yet schematic, so let move on.
 ### Phase 9: Lamps
 
 ![Arcs Of Verona (Phase 9)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase09.png)
+
+If you've read my Concept, you already know that I'm using 500 lines
+of code limit for a single generative study. At this point, I've
+already used about 400 lines (comments included) without breaking
+Python code style too much. So, let keep the rest of scene's details as
+much simple as possible, to fit in another 100 lines of code.
+
+Lamps were the only part of composition that was missing at that
+point. To keep it simple, I generated them in a manner of wireframe,
+black in color.
+
+1. Lamp's mount: a little triangle, then a long vertical rectangle, filled
+   with solid color.
+2. Lamp's top: a half-circle, filled with solid color.
+3. Lamp's body: rectangle filled with vertical gradient from opaque
+   black to semi-transparent white, to emulate a 'glass'. The gradient
+   pattern is periodic, that creates vertical black stripes simulating
+   a wireframe.
+4. Lamp's bottom: upside down triangle, filled with a solid color.
+
+Then I added simple light effect for a lamp. It is a circle filled
+with radial gradient, from full opaque version of arc's main color, to
+fully transparent. It's drawing before a semi-transparent wireframe,
+creating the effect of light under the glass.
+
+Each lamp's position, proportions and colors are calculating from the
+same properties of each arc. So, they are naturally fit the common
+perspective and coloring. Another iteration in parameters fine-tuning,
+and let consider it's done.
 
 ### Phase 10: Additional Details
 
