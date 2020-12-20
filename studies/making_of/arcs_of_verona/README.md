@@ -31,7 +31,7 @@ distribution.
 The arc's form was the trickiest part of the study. I meditated on the
 original photo for an amount of time just to end up with the fact I
 have no idea how to reproduce it. So, I opened a photo in my favorite
-editor, and draw several lines through the gaps between the bricks,
+editor, and drew several lines through the gaps between the bricks,
 just out of interest. The result astonished me immediately. Lines for
 the first quarter are all intersecting at the same point, right in the
 "center" of the arc. For the second quarter, lines are intersecting at
@@ -68,7 +68,7 @@ constants and re-used them for every coordinate that needs a
 projection to create a solid perspective for the scene.
 
 So, for the floor, I just transformed all coordinates of the generated
-pattern and picked up projection constants to make it look like the
+pattern and picked up projection constants to make it look like at the
 original image. Then, I calculated arcs' positions and widths using
 the same perspective. Each arc also has a different color from the 5
 base colors palette. I used only those colors to derive every other
@@ -242,7 +242,7 @@ and let consider it's done.
 ![Arcs Of Verona (Phase 10)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase10.png)
 
 The main composition was complete, but I had another 50 lines of code
-left to the limit of 500. So, I decided to add more details to the
+left under the limit of 500. So, I decided to add more details to the
 scene, until I hit that limit. I didn't know how much each detail
 could take, so I set priorities of what I could implement and just
 started with them in order.
