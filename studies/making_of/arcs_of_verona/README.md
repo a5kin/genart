@@ -216,13 +216,13 @@ much simple as possible, to fit in another 100 lines of code.
 
 Lamps were the only part of composition that was missing at that
 point. To keep it simple, I generated them in a manner of wireframe,
-black in color.
+dark in color.
 
 1. Lamp's mount: a little triangle, then a long vertical rectangle, filled
    with solid color.
 2. Lamp's top: a half-circle, filled with solid color.
 3. Lamp's body: rectangle filled with vertical gradient from opaque
-   black to semi-transparent white, to emulate a 'glass'. The gradient
+   dark to semi-transparent white, to emulate a 'glass'. The gradient
    pattern is periodic, that creates vertical black stripes simulating
    a wireframe.
 4. Lamp's bottom: upside down triangle, filled with a solid color.
@@ -241,3 +241,65 @@ and let consider it's done.
 
 ![Arcs Of Verona (Phase 10)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase10.png)
 
+The main composition was complete, but I had another 50 lines of code
+left to 500 limit. So, I decided to add more details to the scene,
+until I hit that limit. I didn't know how much each detail could take,
+so I set priorities of what I could implement and just started with
+them in order.
+
+First, the altar's details. There are golden 'rays' and a pattern at
+the top. The pattern looked too difficult to me, so I just focused on
+rays. There is a little half-circle at the center, and 12 rays around
+it. Sounds easy, fits in 16 lines of code.
+
+Second, the texture of the 'street' at the very bottom of the image. I
+simulated it with almost transparent lines, perpendicular to the
+street. Each line is broken into a number of segments, and coordinates
+are randomly shifted by Uniform distribution. When perspective is
+applied to distorted coordinates, it results in a texture you see
+at the image. Another 24 lines of code.
+
+Third, two glares on the floor coming from the windows. That was super
+easy. I just drew two semi-transparent white parallelograms over the
+floor plane. After perspective is applied, they are naturally fit
+the scene. 10 lines of code, and the limit is hit.
+
+As a final touch, I played a bit with all my constants fine-tuning
+them. Then, chose a random seed to reproduce the exact image. For
+that, I generated 100 images with randomly chosen seeds, then made a
+'tournament' between them. I split images in pairs and chose the best
+of each pair, then repeat a process with 'winners' until the only one
+image left.
+
+### Conclusion
+
+I learned a lot from this study. The main thing, I tested a hypothesis
+that this kind of study (generative one) is possible. My wife had some
+critique as an artist regarding perspective and colors, but generally
+she confirmed it was a successful one.
+
+I wrote an ecosystem of code for my future studies based on Python /
+Cairo. A lot of stuff from this study could be re-used, like color
+transformations, perspective, drawing primitives, etc. So, I moved
+them all to the utils package. And if I need something specific, like
+an arc form in the future, I could just import all necessary functions
+from the main study module.
+
+I learned how to use perspective and simulate lighting in
+2D. Regarding lighting, I learned that HLS scheme works best. RGB
+scheme corrupts hues when you light up colors, and HSV scheme do not
+lights colors up to the white.
+
+I learned how to reverse-engineer patterns and forms that seems to be
+complex. For that, you have to split them up into smaller parts, then
+try to reproduce each part separately. And if you have no idea how to
+reproduce something, try to draw it by your hand, it may give you some
+insights for coding.
+
+I also learned some technical details about using Cairo. Like how to
+use gradients or combine two separate surfaces in one.
+
+The whole process took about 50 hours of work in my spare time. Quite
+long for a study, but I had a lot of fun in the process and really
+love the result. Now, I'm looking forward to the next one, hopefully
+it will take much less time.
