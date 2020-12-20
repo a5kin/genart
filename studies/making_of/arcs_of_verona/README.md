@@ -2,13 +2,13 @@
 
 For several years I was watching my wife drawing sketches and studies
 to grow as an artist. Then suddenly I had the idea to try the same by
-myself. But using the power of pure code instead of brushes and
+myself. But using the power of pure [code] instead of brushes and
 pencils.
 
-So, I called this format "Generative Studies", wrote a brief Concept
+So, I called this format "Generative Studies", wrote a brief [Concept]
 for myself, and started with my first study.
 
-The original photo I tried to reproduce was an arcade somewhere in
+The [original photo] I tried to reproduce was an arcade somewhere in
 the city of Verona. Its beautiful colors and magnificent architecture
 was an inspiration for me during the whole process.
 
@@ -207,7 +207,7 @@ Looks pretty close, yet schematic, so let move on.
 
 ![Arcs Of Verona (Phase 9)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase09.png)
 
-If you've read my Concept, you already know that I'm using 500 lines
+If you've read my [Concept], you already know that I'm using 500 lines
 of code limit for a single generative study. At this point, I've
 already used about 400 lines (comments included) without breaking
 Python code style too much. So, let keep the rest of the scene's
@@ -301,5 +301,10 @@ use gradients or combine two separate surfaces in one.
 
 The whole process took about 50 hours of work in my spare time. Quite
 long for a study, but I had a lot of fun in the process and really
-love the result. Now, I'm looking forward to the next one, hopefully,
+love [the result]. Now, I'm looking forward to the next one, hopefully,
 it will take much less time.
+
+[code]: https://github.com/a5kin/genart/blob/main/studies/arcs_of_verona.py
+[original photo]: https://colorpalettes.net/color-palette-4184/
+[Concept]: https://github.com/a5kin/genart/blob/main/studies/CONCEPT.md
+[the result]: https://github.com/a5kin/genart/blob/main/studies/study01-arcs_of_verona.png
