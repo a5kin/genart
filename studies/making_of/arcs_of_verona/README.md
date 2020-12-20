@@ -1,75 +1,76 @@
 ## Generative Study: Arcs Of Verona
 
 For several years I was watching my wife drawing sketches and studies
-to grow as an artist.  Then suddenly I had the idea to try the same by
+to grow as an artist. Then suddenly I had the idea to try the same by
 myself. But using the power of pure code instead of brushes and
 pencils.
 
 So, I called this format "Generative Studies", wrote a brief Concept
 for myself, and started with my first study.
 
-The original photo I tried to reproduce was an arcade somewhere in the
-city of Verona.  Its beautiful colors and magnificent architecture was
-an inspiration for me during the whole process.
+The original photo I tried to reproduce was an arcade somewhere in
+the city of Verona. Its beautiful colors and magnificent architecture
+was an inspiration for me during the whole process.
 
 ### Phase 1: Main Wall / Arc Form
 
 ![Arcs Of Verona (Phase 1)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase01.png)
 
-I started with the things in the foreground. The main wall and the
-first arc of the same color.
+I started with things in the foreground. The main wall and the first
+arc of the same color.
 
-The wall consists of bricks, but they are not identical. They differs
+The wall consists of bricks, but they are not identical. They differ
 in color and a brick's width also differs from column to column. So, I
 generated a perfect grid for future bricks, then randomly shifted each
-vertical line a bit. To achieve more natural-looking result, I used
-Gauss distribution through the whole study. For bricks' colors, I
-picked up two base values (lightest and darkest shades), then blended
-each brick's color between them using the same Gauss distribution.
+vertical line a bit. To achieve a more natural-looking result, I used
+Gaussian distribution throughout the whole study. For bricks' colors,
+I picked up two base values (lightest and darkest shades), then
+blended each brick's color between them using the same Gaussian
+distribution.
 
-The arc form was the trickiest part in the study. I meditated on the
-original photo for amount of time just to end up with the fact I have
-no idea how to reproduce it. So, I opened a photo in my favorite
+The arc's form was the trickiest part of the study. I meditated on the
+original photo for an amount of time just to end up with the fact I
+have no idea how to reproduce it. So, I opened a photo in my favorite
 editor, and draw several lines through the gaps between the bricks,
 just out of interest. The result astonished me immediately. Lines for
-the first quater are all intersecting at the same point, right in the
+the first quarter are all intersecting at the same point, right in the
 "center" of the arc. For the second quarter, lines are intersecting at
 the other point... roughly twice as large as the first lines.
 
-With that two facts, it became pretty clear for me how to reproduce
+With those two facts, it became pretty clear for me how to reproduce
 the arc's contour. Let simulate it with two circular paths, first with
 the radius R (half arc's width), second with the radius 2R (arc's
-width). Herewith, last point of the first path, and the first point of
-the second path should be the same.
+width). Herewith, the last point of the first path and the first point
+of the second path should be the same.
 
 The rest was automatic. I just generated a smaller path with the same
-form, and drew bricks between this two using the same random
+form and drew bricks between these two using the same random
 width/color approach as for the main wall.
 
 ### Phase 2: Perspective / Floor Pattern
 
 ![Arcs Of Verona (Phase 2)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase02.png)
 
-To reverse-engineer floor pattern, I rotated it in my mind like I'm
-watching it from the ceiling. And it turned out that it consists of
-perfect square tiles with the following pattern. There are 4x4 tiles
-with the margin 1/3 of the tile. Then, the row with 6 tiles instead of
-4, and the pattern continues. 2x2 tiles in the center of 4x4 are
-combined in a single square, with a smaller square hole carved. And
-that's it:
+To reverse-engineer the floor pattern, I rotated it in my mind like
+I'm watching it from the ceiling. And it turned out that it consists
+of perfect square tiles with the following pattern. There are 4x4
+tiles with a margin of 1/3 of the tile. Then, the row with 6 tiles
+instead of 4, and the pattern continues. 2x2 tiles in the center of
+4x4 are combined in a single square, with a smaller square hole
+carved. And that's it:
 
 ![Arcs Of Verona (Floor Pattern)](/studies/making_of/arcs_of_verona/img/floor_pattern.png)
 
 For the perspective, I wrote a helper function that transforms
-coordinates using focal length of the camera and the angle by which
-the plane is rotated. I also defined focal length and angle as
+coordinates using the focal length of the camera and the angle by
+which the plane is rotated. I also defined focal length and angle as
 constants and re-used them for every coordinate that needs a
 projection to create a solid perspective for the scene.
 
 So, for the floor, I just transformed all coordinates of the generated
-pattern, and picked up projection constants to make it look like at
-the original image. Then, I calculated arcs' positions and widths
-using the same perspective. Each arc also has a different color from 5
+pattern and picked up projection constants to make it look like the
+original image. Then, I calculated arcs' positions and widths using
+the same perspective. Each arc also has a different color from the 5
 base colors palette. I used only those colors to derive every other
 shade next.
 
@@ -80,47 +81,44 @@ shade next.
 To make the scene more complete, I added a far wall generated by the
 same algorithm as the main wall, but with different colors and
 proportions calculated by the common perspective. Didn't mention it,
-but at the previous phase I also added a black area in the center of
-the main wall. It's here just for the debug purposes, until the scene
-is complete.
+but at the previous phase, I also added a black area in the center of
+the main wall. It's here just for debug purposes until the scene is
+complete.
 
 Then, I added a basic idea of the reflections. For that, I drew the
-whole arcade 'upside down' along with the far wall, using perspective
-with the negative height. Then, applied semi-transparent floor over
-it, and finally drew usual arcade.
+whole arcade 'upside-down' along with the far wall, using perspective
+with the negative height. Then, applied a semi-transparent floor over
+it, and finally drew the usual arcade.
 
-So, the order of drawing was following.
+So, the order of drawing was the following.
 
 1. Main wall.
-2. (Temporary) black area in the center.
+2. (Temporary) the black area in the center.
 3. Reflections (item 5 upside down).
 4. Semi-transparent floor.
 5. Arcade with the far wall.
 
-At that moment, reflections were buggy, but I was OK with that. Let
-fix it at the next phase. Right now, the generated image is more close
-to the original, and that's the main goal of the iterative study
-process.
+At that moment, reflections were buggy, but I was OK with that. Let fix it at the next phase. Right now, the generated image is more close to the original, and that's the main goal of the iterative study process.
 
 ### Phase 4: Bricks' Depth / Corrected Reflections
 
 ![Arcs Of Verona (Phase 4)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase04.png)
 
-Arcs' bricks are not flat, so at the next step I added some depth to
-them. For it, I generated third path per each arc (outer, inner +
+Arcs' bricks are not flat, so at the next step, I added some depth to
+them. For it, I generated the third path per each arc (outer, inner +
 depth). The coordinates for the depth path are calculated from the
-inner path, using common perspective of the scene. Then, I rewrote
-arcs' bricks drawing to make a shading effect for the
-bricks. Outer-inner polygon is filled with the main color (+random
-tweaks), and inner-depth polygon is a darken version of the same
-random main color.
+inner path, using the common perspective of the scene. Then, I rewrote
+arcs' bricks drawing to make a shading effect for the bricks. The
+outer-inner polygon is filled with the main color (+random tweaks),
+and the inner-depth polygon is a darkened version of the same random
+main color.
 
-After upper arcs were looking good, I corrected the lower ones
+After the upper arcs were looking good, I corrected the lower ones
 (reflections). Notice, they are not a flipped version of the upper
-ones, but rather built keeping the perspective. Like they are just a
+ones but rather built keeping the perspective. Like they are just a
 continuation of the columns viewed from the same point. I also raised
-the point of view somewhere to the center of the arc, that put the
-scene closer to the original observer look.
+the point of view somewhere to the center of the arc, which put the
+scene closer to the original observer's look.
 
 And the last at this phase, I added a non-transparent 'street' plane
 to the floor (the very bottom of the image).
@@ -130,14 +128,15 @@ to the floor (the very bottom of the image).
 ![Arcs Of Verona (Phase 5)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase05.png)
 
 To cast more natural light to the scene, I improved the coloring for
-the arcs by adding few extra parameters to the arc's drawing
+the arcs by adding a few extra parameters to the arc's drawing
 function.
 
-First, are two ratios by which lower and upper bricks are lighter/darker
-than a base arc color. I noticed that arcs are lighter at the bottom
-and darker at the top. So, I picked up those two params giving arcs
-that 'gradient' feeling. Note, that each brick is still filled with a
-solid color. And that color still determined by a random Gauss component.
+First, are two ratios by which lower and upper bricks are
+lighter/darker than a base arc color. I noticed that arcs are lighter
+at the bottom and darker at the top. So, I picked up those two params
+giving arcs that 'gradient' feeling. Note, that each brick is still
+filled with a solid color. And that color is still determined by a
+random Gaussian component.
 
 ### Phase 6: Advanced Lighting
 
@@ -146,42 +145,42 @@ solid color. And that color still determined by a random Gauss component.
 Second, are two ratios for inner-depth bricks coloring. I noticed,
 they are darker at the bottom and lighter at the top. So, those
 parameters are determining how much lightness/darkness should be
-applied to the main brick's color, in order to produce 3D effect for
-the inner side. No random component applied to the color at this
-phase, so two sides of each brick has the same 'shade' feeling.
+applied to the main brick's color, to produce a 3D effect for the
+inner side. No random component was applied to the color at this
+phase, so two sides of each brick have the same 'shade' feeling.
 
 I also experimented with the function that makes a color
-lighter. Previously, it was simply multipluing RGB components by the
+lighter. Previously, it was simply multiplying RGB components by the
 same ratio. This was corrupting the hue and looking not so natural on
-higher values. So, I switched to HLS scheme and played again with each
-of the 4 ratios, until the resulting picture looked as much closer to
-the original as possible.
+higher values. So, I switched to the HLS scheme and played again with
+each of the 4 ratios, until the resulting picture looked as much
+closer to the original as possible.
 
 ### Phase 7: Ceiling
 
 ![Arcs Of Verona (Phase 7)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase07.png)
 
-With switching to HLS, colors became softer than at the original
+With switching to HLS, colors became softer than in the original
 image, so I implemented a blend between RGB and HLS lighting. This
-gave more 'succulence' to the lighter shades. Colors were still quite
-different from the original, but I was OK with that. An image alone
-was giving me the similar lighting feeling as at the photo.
+gave more 'succulence' to the lighter shades. The colors were still
+quite different from the original, but I was OK with that. An image
+alone was giving me a similar lighting feeling as at the photo.
 
 Next, was a ceiling, another tricky part I almost broke my head
 over. After several unsuccessful attempts to reproduce it, I finally
-decided to keep it simple and just give the common feeling of
-ceiling's colors. Anyway, it plays the secondary role in the scene,
-and takes only a little part of the whole image.
+decided to keep it simple and just give the common feeling of the
+ceiling's colors. Anyway, it plays a secondary role in the scene and
+takes only a little part of the whole image.
 
-So, to simulate ceiling's lighting, I used two radial
-gradients. First, from the darker to the lighter version of previous
-arc's base color. Second, smaller, from semi-black to fully
+So, to simulate the ceiling's lighting, I used two radial
+gradients. First, from the darker to the lighter version of the
+previous arc's base color. Second, smaller, from semi-black to fully
 transparent to create a 'shadow'.
 
 I also tried to connect each pair of bricks for the two consequent
-arcs with lines, in attempt to image 'bricks' ceiling is made of. But
-they all was looking too ugly and breaking my 3D feeling of the
-scene. So, I kept it, just made them very subtle in color, almost
+arcs with lines, in an attempt to image 'bricks' ceiling is made
+of. But they all were looking too ugly and breaking my 3D feeling of
+the scene. So, I kept it, just made them very subtle in color, almost
 indistinguishable from the ceiling's gradients.
 
 ### Phase 8: Altar / Far Arc
@@ -189,8 +188,8 @@ indistinguishable from the ceiling's gradients.
 ![Arcs Of Verona (Phase 8)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase08.png)
 
 At this moment, primitives were covering the whole image, so I removed
-black area in the center. Remember, it was added before at the Phase 3
-for the debugging purposes.
+the black area in the center. Remember, it was added before at Phase 3
+for debugging purposes.
 
 Now for the 'altar' at the far wall. It has a complex structure, and
 that's how I chose to reproduce it.
@@ -211,28 +210,29 @@ Looks pretty close, yet schematic, so let move on.
 If you've read my Concept, you already know that I'm using 500 lines
 of code limit for a single generative study. At this point, I've
 already used about 400 lines (comments included) without breaking
-Python code style too much. So, let keep the rest of scene's details as
-much simple as possible, to fit in another 100 lines of code.
+Python code style too much. So, let keep the rest of the scene's
+details as simple as possible, to fit in another 100 lines of code.
 
-Lamps were the only part of composition that was missing at that
+Lamps were the only part of the composition that was missing at that
 point. To keep it simple, I generated them in a manner of wireframe,
 dark in color.
 
-1. Lamp's mount: a little triangle, then a long vertical rectangle, filled
-   with solid color.
-2. Lamp's top: a half-circle, filled with solid color.
-3. Lamp's body: rectangle filled with vertical gradient from opaque
+1. Lamp's mount: a little triangle, then a long vertical rectangle,
+   filled with a solid color.
+2. Lamp's top: a half-circle, filled with a solid color.
+3. Lamp's body: rectangle filled with a vertical gradient from opaque
    dark to semi-transparent white, to emulate a 'glass'. The gradient
-   pattern is periodic, that creates vertical black stripes simulating
-   a wireframe.
-4. Lamp's bottom: upside down triangle, filled with a solid color.
+   pattern is periodic, which creates vertical black stripes
+   simulating a wireframe.
+4. Lamp's bottom: upside-down triangle, filled with a solid color.
 
-Then I added simple light effect for a lamp. It is a circle filled
-with radial gradient, from full opaque version of arc's main color, to
-fully transparent. It's drawing before a semi-transparent wireframe,
-creating the effect of light under the glass.
+Then I added a simple light effect for a lamp. It is a circle filled
+with a radial gradient, from the fully opaque version of the arc's
+main color, to fully transparent. It's drawing before a
+semi-transparent wireframe, creating the effect of light under the
+glass.
 
-Each lamp's position, proportions and colors are calculating from the
+Each lamp's position, proportions, and colors are calculating from the
 same properties of each arc. So, they are naturally fit the common
 perspective and coloring. Another iteration in parameters fine-tuning,
 and let consider it's done.
@@ -242,40 +242,40 @@ and let consider it's done.
 ![Arcs Of Verona (Phase 10)](/studies/making_of/arcs_of_verona/img/arcs_of_verona_phase10.png)
 
 The main composition was complete, but I had another 50 lines of code
-left to 500 limit. So, I decided to add more details to the scene,
-until I hit that limit. I didn't know how much each detail could take,
-so I set priorities of what I could implement and just started with
-them in order.
+left to the limit of 500. So, I decided to add more details to the
+scene, until I hit that limit. I didn't know how much each detail
+could take, so I set priorities of what I could implement and just
+started with them in order.
 
 First, the altar's details. There are golden 'rays' and a pattern at
-the top. The pattern looked too difficult to me, so I just focused on
+the top. The pattern looked too difficult for me, so I just focused on
 rays. There is a little half-circle at the center, and 12 rays around
 it. Sounds easy, fits in 16 lines of code.
 
 Second, the texture of the 'street' at the very bottom of the image. I
 simulated it with almost transparent lines, perpendicular to the
-street. Each line is broken into a number of segments, and coordinates
-are randomly shifted by Uniform distribution. When perspective is
-applied to distorted coordinates, it results in a texture you see
-at the image. Another 24 lines of code.
+street. Each line is broken into several segments, and coordinates are
+randomly shifted by Uniform distribution. When perspective is applied
+to distorted coordinates, it results in a texture you see in the
+image. Another 24 lines of code.
 
 Third, two glares on the floor coming from the windows. That was super
 easy. I just drew two semi-transparent white parallelograms over the
-floor plane. After perspective is applied, they are naturally fit
-the scene. 10 lines of code, and the limit is hit.
+floor plane. After perspective is applied, they are naturally fit the
+scene. 10 lines of code and the limit is hit.
 
 As a final touch, I played a bit with all my constants fine-tuning
 them. Then, chose a random seed to reproduce the exact image. For
 that, I generated 100 images with randomly chosen seeds, then made a
-'tournament' between them. I split images in pairs and chose the best
-of each pair, then repeat a process with 'winners' until the only one
-image left.
+'tournament' between them. I split images into pairs and chose the
+best of each pair, then repeat a process with 'winners' until the only
+one image left.
 
-### Conclusion
+## Conclusion
 
 I learned a lot from this study. The main thing, I tested a hypothesis
 that this kind of study (generative one) is possible. My wife had some
-critique as an artist regarding perspective and colors, but generally
+critique as an artist regarding perspective and colors, but generally,
 she confirmed it was a successful one.
 
 I wrote an ecosystem of code for my future studies based on Python /
@@ -286,11 +286,11 @@ an arc form in the future, I could just import all necessary functions
 from the main study module.
 
 I learned how to use perspective and simulate lighting in
-2D. Regarding lighting, I learned that HLS scheme works best. RGB
-scheme corrupts hues when you light up colors, and HSV scheme do not
-lights colors up to the white.
+2D. Regarding lighting, I learned that the HLS scheme works best. RGB
+scheme corrupts hues when you light up colors, and the HSV scheme does
+not light colors up to the white.
 
-I learned how to reverse-engineer patterns and forms that seems to be
+I learned how to reverse-engineer patterns and forms that seem to be
 complex. For that, you have to split them up into smaller parts, then
 try to reproduce each part separately. And if you have no idea how to
 reproduce something, try to draw it by your hand, it may give you some
@@ -301,5 +301,5 @@ use gradients or combine two separate surfaces in one.
 
 The whole process took about 50 hours of work in my spare time. Quite
 long for a study, but I had a lot of fun in the process and really
-love the result. Now, I'm looking forward to the next one, hopefully
+love the result. Now, I'm looking forward to the next one, hopefully,
 it will take much less time.
