@@ -491,4 +491,4 @@ def draw_study():
 
 if __name__ == "__main__":
     draw_study()
-    surface.write_to_png("./study01-arcs_of_verona.png")
+    surface.write_to_png("./assets/pics/study01-arcs_of_verona.png")

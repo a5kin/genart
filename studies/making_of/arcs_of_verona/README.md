@@ -307,4 +307,4 @@ it will take much less time.
 [code]: https://github.com/a5kin/genart/blob/main/studies/arcs_of_verona.py
 [original photo]: https://colorpalettes.net/color-palette-4184/
 [Concept]: https://github.com/a5kin/genart/blob/main/studies/CONCEPT.md
-[the result]: https://github.com/a5kin/genart/blob/main/studies/study01-arcs_of_verona.png
+[the result]: https://github.com/a5kin/genart/blob/main/studies/assets/pics/study01-arcs_of_verona.png
